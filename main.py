@@ -2,6 +2,7 @@ import random
 from string import digits
 
 bankAppMain = True
+
 def bankApp():
     start = input("\n1. Staff Login \n2. Close App\n\n")
     if start == "1":
@@ -33,16 +34,19 @@ def operations():
         acc_number = "".join(secureRandom.choice(digits) for i in range(10))
         print("This is the customer's genrerated Account Number: ", acc_number)
         with open('customer.txt', 'a') as f:
-            f.write("\nAccount Name: %s\n" % name)
+            f.write("\n\nAccount Name: %s\n" % name)
             f.write("Opening Balance: %s\n" % balance)
             f.write("Account Type: %s\n" % acc_type)
             f.write("Email: %s\n" % email)
             f.write("Account Number %s" % acc_number)
             print("Acounted Created Successfully")
-            return operations()
+        return operations()
     
     elif start == "2":
-        print("M checking \n")
+        chk_acc = int(input("Enter Customer's Account Number: "))
+        if chk_acc < 10:
+            input("Enter A Valid Account Number: ")
+        
     
     elif start == "3":
         return bankApp()

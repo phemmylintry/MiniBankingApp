@@ -4,3 +4,14 @@ Opening Balance: 0
 Account Type: savings
 Email: ade@gmail.com
 Account Number 4364189549
+Account Name: Ade Stephen
+Opening Balance: 0
+Account Type: current
+Email: femi@gmail.com
+Account Number 1988661748
+
+Account Name: Stephen Femi
+Opening Balance: 9000
+Account Type: current
+Email: femi@gmail.com
+Account Number 4509502894
