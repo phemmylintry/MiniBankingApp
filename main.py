@@ -1,5 +1,7 @@
 import random
 from string import digits
+import os
+import datetime
 
 bankAppMain = True
 
@@ -17,10 +19,13 @@ def staffLogin():
         psw = input("Input your password: ")
         if user in users and psw in users:
             print("Login Successful \n")
+            with open('session.txt', 'w') as f:
+                f.write("Session started: " + str(datetime.datetime.now()))
             return operations()
         else:
             print("Wrong Credentials")
             return bankApp()
+
 
 def operations():
     start = input("1. Create New Bank Account \n2. Check Account Details \n3. Logout\n")
@@ -33,24 +38,35 @@ def operations():
         secureRandom = random.SystemRandom()
         acc_number = "".join(secureRandom.choice(digits) for i in range(10))
         print("This is the customer's genrerated Account Number: ", acc_number)
-        with open('customer.txt', 'a') as f:
-            f.write("\n\nAccount Name: %s\n" % name)
-            f.write("Opening Balance: %s\n" % balance)
-            f.write("Account Type: %s\n" % acc_type)
-            f.write("Email: %s\n" % email)
-            f.write("Account Number %s" % acc_number)
+        with open('customer.txt', 'a') as f1, open('session.txt', 'a') as f2:
+            f1.write("\n\nAccount Name: %s\n" % name)
+            f1.write("Opening Balance: %s\n" % balance)
+            f1.write("Account Type: %s\n" % acc_type)
+            f1.write("Email: %s\n" % email)
+            f1.write("Account Number %s\n" % acc_number)
+            f2.write("\n\nAccount Name: %s\n" % name)
+            f2.write("Opening Balance: %s\n" % balance)
+            f2.write("Account Type: %s\n" % acc_type)
+            f2.write("Email: %s\n" % email)
+            f2.write("Account Number %s\n" % acc_number)
             print("Acounted Created Successfully")
         return operations()
     
     elif start == "2":
-        chk_acc = int(input("Enter Customer's Account Number: "))
-        if chk_acc < 10:
-            input("Enter A Valid Account Number: ")
-        
-    
+        with open('session.txt', 'r') as f:
+            details = f.read()
+            chk_acc = input("Enter Customer's Account Number: ")
+            if chk_acc in details:
+                print(details)
+                f.close()
+                return operations()
+            else:
+                print('Not found')
+                return operations() 
+
     elif start == "3":
+        os.remove('session.txt')
         return bankApp()
 
-while (bankApp):
+while (bankAppMain):
     program = bankApp()
-    operations = operations()
